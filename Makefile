@@ -1,11 +1,12 @@
-defaultmake:
-	mv -v bind/templates/example.internal.zone.j2 bind/templates/$(MY_ZONE).zone.j2
-	sed -i 's/example.internal/$(MY_ZONE)' bin/vars/main.yml test/run.sh bind/vars/main.yml
+install:
+	mv bind/templates/example.internal.zone.j2 bind/templates/$(MY_ZONE).zone.j2
+	sed -i 's/example.internal/$(MY_ZONE)/' bind/vars/main.yml test/run.sh
 
 test_static:
 	shellcheck test/run.sh
 	ansible-playbook --syntax-check bind.yml
 	ansible-playbook --syntax-check test/test.yml
+	ansible-lint -x 305 bind.yml
 
 build:
 	docker build -t dns-test -f Dockerfile .
@@ -21,7 +22,7 @@ test: build teardown
 	docker exec -t dns-test bash test/run.sh
 
 deploy:
-	ansible-playbook bind.yml
+	ansible-playbook bind.yml -e target=$(TARGET)
 
 healthcheck:
 	bash test/run.sh

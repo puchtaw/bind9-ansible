@@ -1,6 +1,6 @@
 galaxy_info:
   author: Wojciech Puchta
-  description: 
+  description: This is simple bind9 installer. When forked can be a good repository for your internal DNS configuration.
 
   license: MIT
   min_ansible_version: 2.5

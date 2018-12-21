@@ -15,8 +15,8 @@
     dest: "{{ item.destination }}"
   with_items:
     - { template: db.0.10.j2, destination: "{{ bind_config_dir }}/db.0.10" }
-    - { template: "{{ tld }}".zone.j2, destination: "{{ bind_config_dir }}/{{ tld }}.zone" }
-    - { template: named.conf.local, destination: "{{ bind_config_dir }}/named.conf.local"}
+    - { template: "{{ tld }}.zone.j2", destination: "{{ bind_config_dir }}/{{ tld }}.zone" }
+    - { template: named.conf.local.j2, destination: "{{ bind_config_dir }}/named.conf.local"}
   notify:
     - Check config syntax
 
