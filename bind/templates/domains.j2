@@ -1,0 +1,8 @@
+{% for record in dns %}
+{% if record.name != "." ~ tld and record.name != tld %}
+{{ record.name }}.{{ tld }}
+{% endif %}
+{% endfor %}
+{% for hostname, addr in servers.iteritems() %}
+{{ addr.ip }}
+{% endfor %}

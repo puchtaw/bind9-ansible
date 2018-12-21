@@ -1,0 +1,18 @@
+; reverse data file for local loopback interface
+;
+$TTL    604800
+@ IN SOA ns1.{{ tld }}. root.ns1.{{ tld }}. (
+         3013040200         ; Serial
+             604800         ; Refresh
+              86400         ; Retry
+            2419200         ; Expire
+             604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns1.{{ tld }}.
+
+{{ servers[tld_a_record].ptr }}      IN      PTR     {{ tld }}.
+{% for record in dns %}
+{% if record.type == "A" and record.name != tld %}
+{{ servers[record.addr].ptr }}      IN      PTR     {{ record.name }}.{{ tld }}
+{% endif %}
+{% endfor %}

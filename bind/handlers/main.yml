@@ -1,0 +1,10 @@
+---
+- name: Check config syntax
+  shell: named-checkconf /etc/bind/named.conf
+  notify: Reload bind server
+
+- name: Reload bind server
+  systemd:
+    name: bind9
+    state: reloaded
+  when: reload

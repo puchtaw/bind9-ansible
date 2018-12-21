@@ -1,0 +1,17 @@
+; Forward Zone file for {{ tld }}
+$TTL 14400
+@      86400    IN      SOA     ns1.{{ tld }}. root.{{ tld }}. (
+        3013040200      ; serial, todays date+todays
+        86400           ; refresh, seconds
+        7200            ; retry, seconds
+        3600000         ; expire, seconds
+        86400          ; minimum, seconds
+)
+
+{{ tld }}.      86400   IN  NS ns1.{{ tld }}.
+{{ tld }}.              IN  A   {{ servers[tld_a_record].ip }}
+ns1                     IN  A   {{ servers[bind9_host].ip }}
+www                     IN  CNAME   {{ tld }}.
+{% for record in dns %}{% if record.name != tld %}
+{{ record.name }}     IN   {{ record.type }}    {{ servers[record.addr].ip }}
+{% endif %}{% endfor %}

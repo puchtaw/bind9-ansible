@@ -1,0 +1,117 @@
+---
+tld: example.internal
+tld_a_record: "proxy_server"
+bind9_host: "hypervisor"
+
+servers:
+  hypervisor:
+    ip: 10.0.0.10
+    ptr: 10.0
+  
+  proxy_server:
+    ip: 10.0.0.11
+    ptr: 11.0
+  
+  application_server:
+    ip: 10.0.0.13
+    ptr: 13.0
+  
+  database_server: 
+    ip: 10.0.0.14
+    ptr: 14.0
+  
+  local_dev_server: 
+    ip: 10.0.1.3
+    ptr: 3.1
+
+
+
+dns:
+  # network hosts
+  - 
+    name: ap
+    addr: "application_server"
+    type: A
+  - 
+    name: px
+    addr: "proxy_server"
+    type: A
+  - 
+    name: hv
+    addr: "hypervisor"
+    type: A
+  - 
+    name: db
+    addr: "database_server"
+    type: A
+  
+  # web apps and services
+  - 
+    name: "{{ tld }}"
+    addr: "proxy_server"
+    type: A
+  - 
+    name: api
+    addr: "proxy_server"
+    type: A
+  - 
+    name: wiki
+    addr: "proxy_server"
+    type: A
+
+  # devops
+  - 
+    name: jenkins
+    addr: "hypervisor"
+    type: A
+  - 
+    name: rabbit
+    addr: "database_server"
+    type: A
+  - 
+    name: elastic
+    addr: "hypervisor"
+    type: A
+  - 
+    name: kibana
+    addr: "hypervisor"
+    type: A
+  - 
+    name: mysql
+    addr: "database_server"
+    type: A
+  -
+    name: gitlab
+    addr: "hypervisor"
+    type: A
+  - 
+    name: pip
+    addr: "proxy_server"
+    type: A
+  - 
+    name: registry
+    addr: "hypervisor"
+    type: A
+  -
+    name: supervisor
+    addr: "proxy_server"
+    type: A
+  -
+    name: grafana
+    addr: "hypervisor"
+    type: A
+
+
+  # staging env
+  - 
+    name: staging
+    addr: "local_staging_server"
+    type: A
+  - 
+    name: api.staging
+    addr: "proxy_server"
+    type: A
+  - 
+    name: wiki.staging
+    addr: "proxy_server"
+    type: A

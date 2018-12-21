@@ -1,0 +1,26 @@
+---
+- name: Install bind
+  apt:
+    name: bind9
+    state: present
+
+- name: Deploy configuration
+  copy:
+    src: "conf/"
+    dest: "{{ bind_config_dir }}"
+
+- name: Deploy custom zone
+  template:
+    src: "{{ item.template }}"
+    dest: "{{ item.destination }}"
+  with_items:
+    - { template: db.0.10.j2, destination: "{{ bind_config_dir }}/db.0.10" }
+    - { template: "{{ tld }}".zone.j2, destination: "{{ bind_config_dir }}/{{ tld }}.zone" }
+    - { template: named.conf.local, destination: "{{ bind_config_dir }}/named.conf.local"}
+  notify:
+    - Check config syntax
+
+- name: Generate names list
+  template:
+    src: domains.j2
+    dest: /tmp/dns_test

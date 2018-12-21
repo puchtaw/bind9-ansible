@@ -1,0 +1,6 @@
+---
+- hosts: "{{ target }}"
+  connection: local
+  become: yes
+  roles:
+    - bind

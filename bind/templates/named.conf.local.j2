@@ -1,0 +1,9 @@
+zone "{{ tld }}" IN {
+        type master;
+        file "/etc/bind/{{ tld }}.zone";
+};
+
+zone "0.10.in-addr.arpa" {
+        type master;
+        file "/etc/bind/db.0.10";
+};

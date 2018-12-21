@@ -1,0 +1,14 @@
+galaxy_info:
+  author: Wojciech Puchta
+  description: 
+
+  license: MIT
+  min_ansible_version: 2.5
+  platforms:
+    - name: Ubuntu
+    - versions:
+      - xenial
+  galaxy_tags:
+    - infra
+    - dns
+    - bind
